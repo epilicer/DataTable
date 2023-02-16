@@ -18,7 +18,7 @@ You may also wish to think about how to combine tables that have different prope
 
 ## How to Compile & Run
 
-g++ DataTable.cpp -o DataTable
+g++ DataTable.cpp -o DataTable  
 ./DataTable
 
 -or-
