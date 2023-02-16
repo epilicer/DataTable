@@ -1,5 +1,5 @@
 
-## C++ Data Table
+## Data Table
 
 Here is an example of a table of drug molecules with associated data:
 
