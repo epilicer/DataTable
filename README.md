@@ -9,10 +9,10 @@ Caffeine          5.05                    194
 Indomethacin      0.4                     358
 Trimethoprim      3.14                    290
 
-Using C++, write a simple data table class that can represent collections of molecules with associated properties. 
+Write a simple data table class that can represent collections of molecules with associated properties. 
 The properties can be numeric or text types. 
 
-Write C++ code that can combine two data tables. 
+Write a code that can combine two data tables. 
 You may wish to provide the ability to take set unions, differences and intersections. 
 You may also wish to think about how to combine tables that have different property columns.
 
@@ -20,4 +20,7 @@ You may also wish to think about how to combine tables that have different prope
 
 g++ DataTable.cpp -o DataTable
 
+-or-
+
+python DataTable.py
 
