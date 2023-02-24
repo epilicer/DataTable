@@ -1,6 +1,7 @@
 # exclude binaries
 DataTable
 SimpleCalculator
+RandomDateGenerator
 RandomDateWidget
 
 # exclude qmake generated stashes
