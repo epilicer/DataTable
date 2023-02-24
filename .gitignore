@@ -3,6 +3,8 @@ DataTable
 SimpleCalculator
 RandomDateGenerator
 RandomDateWidget
+RandomDateChart
+FileSizePlotter
 
 # exclude qmake generated stashes
 *.stash
