@@ -1,62 +1,55 @@
+/*
+Random date generator using the C++11 chrono library that generates random 
+dates between a given start and end time
+
+RandomDateGenerator generator("2022-01-01", "2022-12-31");
+std::string random_date = generator.generate_date();
+std::cout << "Random date: " << random_date << std::endl;
+*/
+
+#include <chrono>
+#include <random>
 #include <iostream>
-#include <ctime>
-#include <cstdlib>
-#include <vector>
 
 class RandomDateGenerator {
 public:
-    RandomDateGenerator(const std::string& start_date, const std::string& end_date)
-        : m_startDate(start_date), m_endDate(end_date) {}
+    RandomDateGenerator(const std::string& start, const std::string& end) {
+        start_tp_ = convert_to_timepoint(start);
+        end_tp_ = convert_to_timepoint(end);
+    }
 
-    std::vector<std::string> generateDates(int num_dates) {
-        /*
-        The generateDates() function takes an integer argument num_dates, 
-        which specifies how many random dates to generate. 
-        It returns a std::vector<std::string> containing the randomly generated dates.
-        */
-        std::vector<std::string> dates;
-        time_t start_time = convertToDate(m_startDate);
-        time_t end_time = convertToDate(m_endDate);
-        
-        for (int i = 0; i < num_dates; i++) {
-            time_t random_time = getRandomTime(start_time, end_time);
-            std::string random_date = convertToDateString(random_time);
-            dates.push_back(random_date);
-        }
-        
-        return dates;
+    std::string generate_date() {
+        // Get the duration range between the start and end timepoints
+        auto duration_range = std::chrono::duration_cast<std::chrono::seconds>(end_tp_ - start_tp_).count();
+
+        // Generate a random number between 0 and the duration range
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, duration_range);
+        auto rand_seconds = std::chrono::seconds(dis(gen));
+
+        // Add the random duration to the start timepoint to get the random date
+        auto rand_tp = start_tp_ + rand_seconds;
+
+        return convert_to_string(rand_tp);
     }
 
 private:
-    std::string m_startDate;
-    std::string m_endDate;
-    
-    time_t convertToDate(const std::string& date_str) {
-        /*
-        The convertToDate() function converts a date string to a time_t value, 
-        which is the number of seconds since the UNIX epoch (January 1, 1970).
-        */
-        struct tm tm = {};
-        strptime(date_str.c_str(), "%Y-%m-%d", &tm);
-        return mktime(&tm);
+    std::chrono::system_clock::time_point convert_to_timepoint(const std::string& date_str) {
+        std::tm tm = {};
+        std::istringstream ss(date_str);
+        ss >> std::get_time(&tm, "%Y-%m-%d");
+        return std::chrono::system_clock::from_time_t(std::mktime(&tm));
     }
-    
-    std::string convertToDateString(time_t time) {
-        /*
-        The convertToDateString() function converts a time_t value to a date string in the format "YYYY-MM-DD".
-        */
-        char buffer[11];
-        strftime(buffer, 11, "%Y-%m-%d", localtime(&time));
-        return std::string(buffer);
-    }
-    
 
-    time_t getRandomTime(time_t start_time, time_t end_time) {
-        /*
-        The getRandomTime() function generates a random time_t value between the start and end times by generating
-        a random number of seconds between 0 and the difference between the two times, and adding that number of seconds to the start time.
-        */        
-        double random_seconds = std::rand() / (double)RAND_MAX * (end_time - start_time);
-        return start_time + random_seconds;
+    std::string convert_to_string(const std::chrono::system_clock::time_point& tp) {
+        std::time_t t = std::chrono::system_clock::to_time_t(tp);
+        std::tm tm = *std::localtime(&t);
+        std::ostringstream oss;
+        oss << std::put_time(&tm, "%Y-%m-%d");
+        return oss.str();
     }
+
+    std::chrono::system_clock::time_point start_tp_;
+    std::chrono::system_clock::time_point end_tp_;
 };

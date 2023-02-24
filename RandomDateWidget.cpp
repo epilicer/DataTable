@@ -5,16 +5,18 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
-#include <QDateEdit>
+//#include <QDateEdit>
 
-#include "RandomDateGenerator.h"
+#include "RandomDatesGenerator.h"
+//#include <memory>
 
 class RandomDateWidget : public QWidget {
 public:
     RandomDateWidget(QWidget* parent = nullptr) : QWidget(parent) {
-        // Create a new instance of the RandomDateGenerator class with default dates
-        //m_dateGenerator = std::make_unique<RandomDateGenerator>("2022-01-01", "2022-12-31");
-        m_dateGenerator = new RandomDateGenerator("2022-01-01", "2022-12-31");
+        // Create a new instance of the RandomDatesGenerator class with default dates
+        std::unique_ptr<RandomDatesGenerator> m_dateGenerator(new RandomDatesGenerator("2022-01-01", "2022-12-31"));
+        //m_dateGenerator = std::make_unique<RandomDatesGenerator>("2022-01-01", "2022-12-31");
+        //m_dateGenerator = new RandomDatesGenerator("2022-01-01", "2022-12-31");
 
         // Create the layout for the widget
         QVBoxLayout* layout = new QVBoxLayout(this);
@@ -63,16 +65,17 @@ private:
     QLineEdit *m_endDateEdit;
     QLabel* m_titleLabel;
     QVBoxLayout* m_dateLabelsLayout;
-    RandomDateGenerator* m_dateGenerator;
+    RandomDatesGenerator* m_dateGenerator;
 
     void generateRandomDates() {
         // Get the start and end dates from the line edits
         std::string startDate = m_startDateEdit->text().toStdString();
         std::string endDate = m_endDateEdit->text().toStdString();
 
-        // Create a new instance of the RandomDateGenerator class with the user input dates
-        //m_dateGenerator = std::make_unique<RandomDateGenerator>(startDate, endDate);
-        m_dateGenerator = new RandomDateGenerator(startDate, endDate);
+        // Create a new instance of the RandomDatesGenerator class with the user input dates
+        std::unique_ptr<RandomDatesGenerator> m_dateGenerator(new RandomDatesGenerator(startDate, endDate));
+        //m_dateGenerator = std::make_unique<RandomDatesGenerator>(startDate, endDate);
+        //m_dateGenerator = new RandomDatesGenerator(startDate, endDate);
         
         // Generate a vector of 10 random dates
         std::vector<std::string> randomDates = m_dateGenerator->generateDates(10);
