@@ -1,1 +1,12 @@
+# exclude binaries
 DataTable
+SimpleCalculator
+RandomDateWidget
+
+# exclude qmake generated stashes
+*.stash
+
+# exclude objects
+*.o
+
+

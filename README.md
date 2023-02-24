@@ -16,13 +16,17 @@ Write a code that can combine two data tables.
 You may wish to provide the ability to take set unions, differences and intersections. 
 You may also wish to think about how to combine tables that have different property columns.
 
-## How to Compile & Run
+## How to compile
 
-g++ DataTable.cpp -o DataTable  
-./DataTable
-
+g++ DataTable.cpp -o DataTable
 -or-
-
 python DataTable.py
 
+## For Qt based compilation
+
+Use the **qmake** tool to generate a **Makefile** based on your **.pro** file. 
+If you do not have a **.pro** file, you can create one by running `qmake -project` command.
+Edit **.pro** file if needed, and run the `qmake` command to generate the **Makefile**.
+Now you can use `make` command to compile the program. 
+If you have file specific **Makefile** you can compile it by using its own name, for example `make -f SimpleCalculatorMakefile` command to compile the program.
 
