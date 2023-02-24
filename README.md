@@ -16,9 +16,10 @@ Write a code that can combine two data tables.
 You may wish to provide the ability to take set unions, differences and intersections. 
 You may also wish to think about how to combine tables that have different property columns.
 
-## How to compile
+## How to Compile & Run
 
-g++ DataTable.cpp -o DataTable
+g++ DataTable.cpp -o DataTable  
+./DataTable
 
 -or-
 
